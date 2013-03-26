@@ -1,0 +1,25 @@
+// 1. Create the main stream
+-stream = Array.new
+
+// 2. Add followee submissions to stream
+-@followees_submissions.each do |s|
+  -submission = Hash.new
+  -submission["Category"] = "Followees Submissions"
+  -submission["Time"] = s.time
+  -submission["Title"] = s.link.title
+  -submission["Url"] = s.link.href
+  -stream << submission
+
+// 3. Add users latest submission position on frontpage
+-submission = Hash.new
+-submission["Category"] = "User Submission"
+-submission["Time"] = @user_latest_submission.time
+-submission["Title"] = @user_latest_submission.link.title
+-submission["Url"] = @user_latest_submission.link.href
+-submission["Position"] = @user_latest_submission.number
+-submission["Upvotes"] = @user_latest_submission.voting.score
+-submission["Comments"] = @user_latest_submission.comments_count
+-stream << submission
+
+// 4. Return the plist
+=raw stream.to_plist
